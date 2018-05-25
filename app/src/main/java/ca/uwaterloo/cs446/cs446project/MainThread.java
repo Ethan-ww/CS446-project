@@ -16,13 +16,14 @@ public class MainThread extends Thread {
     private boolean running=false; // this indicates whether the thread is running or not
     public Canvas canvas;
 
-    private int targetFPS=60;
+    private int targetFPS;
     private int averageFPS=0; // show the actual FPS
 
     public MainThread(SurfaceHolder surfaceHolder, GameView gameView){
         super();
         this.surfaceHolder=surfaceHolder;
         this.gameView=gameView;
+        this.targetFPS = gameView.fps;
     }
 
     @Override
