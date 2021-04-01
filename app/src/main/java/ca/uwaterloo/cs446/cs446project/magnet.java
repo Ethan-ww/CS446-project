@@ -22,8 +22,4 @@ public class magnet extends Tool {
 
     }
 
-    @Override
-    void use() {
-
-    }
 }

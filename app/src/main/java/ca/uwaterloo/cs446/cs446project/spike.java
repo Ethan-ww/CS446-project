@@ -12,15 +12,17 @@ import java.util.ArrayList;
  */
 
 public class spike extends StaticObject {
+    boolean needToDraw;
     public spike(Context context, Bitmap background, ArrayList<Rect> src, ArrayList<Rect> dest) {
         super(context, background, src, dest);
         this.type = HitType.SPIKE;
+        needToDraw = true;
     }
 
     @Override
     public HitType hitModel(Rect rect) {
         for (int i = 0; i < dest.size(); i++) {
-            if (Rect.intersects(rect,dest.get(i))) {
+            if (Rect.intersects(rect,dest.get(i)) && needToDraw) {
                 return type;
             }
         }
@@ -35,10 +37,10 @@ public class spike extends StaticObject {
     @Override
     public void draw (Canvas c) {
         super.draw(c);
-
-        for (int i = 0; i < src.size(); i++) {
-            c.drawBitmap(background, src.get(i), dest.get(i), null);
-
+        if (needToDraw) {
+            for (int i = 0; i < src.size(); i++) {
+                c.drawBitmap(background, src.get(i), dest.get(i), null);
+            }
         }
     }
 

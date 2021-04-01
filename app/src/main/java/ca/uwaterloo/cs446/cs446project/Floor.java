@@ -28,20 +28,25 @@ public class Floor extends StaticObject {
 
         @Override
         public void draw (Canvas c) {
-                super.draw(c);
                 Paint p = new Paint();
                 p.setStyle(Paint.Style.FILL);
                 p.setColor(Color.BLACK);
 
 
                for (int i = 0; i < src.size(); i++) {
-                   Rect temp = new Rect (dest.get(i).left,
-                           dest.get(i).top - background.getHeight(), dest.get(i).right, dest.get(i).top);
+                   if (type == HitType.FLOOR) {
+                       Rect temp = new Rect(dest.get(i).left,
+                               dest.get(i).top - background.getHeight(), dest.get(i).right, dest.get(i).top);
 
-                   c.drawBitmap(background, src.get(i), temp, null);
+                       c.drawBitmap(background, src.get(i), temp, null);
 
-                   c.drawRect(dest.get(i), p);
+                       c.drawRect(dest.get(i), p);
+                   }
 
+                   else if (type == HitType.WATER) {
+                       c.drawBitmap(background, src.get(i), dest.get(i), null);
+
+                   }
                 }
 
 
@@ -56,21 +61,25 @@ public class Floor extends StaticObject {
         for (int i = 0; i < dest.size(); i++) {
             Rect curDest = dest.get(i);
             if (Rect.intersects(rect, curDest)) {
+                    if (this.type == HitType.WATER && type == HitType.WATER) {
+                        curground = i;
+                    return type;
+                }
                 if (type == HitType.UP && rect.bottom > curDest.bottom)
                     return type;
-                if (type == HitType.DOWN && rect.bottom >= curDest.top) {
+                if (type == HitType.DOWN && rect.bottom >= curDest.top && rect.bottom < curDest.bottom && rect.top < curDest.top) {
                     if (curground != -1 && dest.get(curground).top > curDest.top && Rect.intersects(dest.get(curground), rect)) {}
                     else {curground = i; }
                     return type;
                 }
-                if (type == HitType.LEFT) {
+                if (type == HitType.LEFT ) {
                     if (dest.get(i).left >= rect.left || curground == i) {continue;}
                     if (rect.left <= curDest.right)
                         return type;
                 }
                 if (type == HitType.RIGHT) {
                     if (dest.get(i).right <= rect.right || curground == i) {continue;}
-                    if (rect.right >= curDest.left)
+                    if (rect.right >= curDest.left && curDest.bottom > rect.bottom)
                         return type;
 
                 }
@@ -81,6 +90,10 @@ public class Floor extends StaticObject {
     }
 
     public int getFloorHeight() {
+
+        if (type == HitType.WATER) {
+            return dest.get(curground).top + 50;
+        }
         return dest.get(curground).top;
     }
 

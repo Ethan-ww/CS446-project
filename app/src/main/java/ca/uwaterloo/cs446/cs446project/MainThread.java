@@ -40,14 +40,14 @@ public class MainThread extends Thread {
             canvas=null;
 
             try{
-                canvas=this.surfaceHolder.lockCanvas();
-                // lock canvas freeze it and allow us to draw on it
+                    canvas = this.surfaceHolder.lockCanvas();
+                    // lock canvas freeze it and allow us to draw on it
 
-                synchronized (surfaceHolder){
-                    this.gameView.update();
-                    this.gameView.draw(canvas);
+                    synchronized (surfaceHolder) {
+                        this.gameView.update();
+                        this.gameView.draw(canvas);
 
-                }
+                    }
             }catch (Exception e){
                 // need exception handler
             }finally {

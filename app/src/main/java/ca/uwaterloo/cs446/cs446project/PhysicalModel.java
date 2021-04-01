@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * Created by ethan on 2018-05-16.
  */
 
-abstract public class PhysicalModel extends SurfaceView{
+abstract public class PhysicalModel {
     public Bitmap background;
     protected Context context;
     public HitType type;
@@ -22,7 +22,7 @@ abstract public class PhysicalModel extends SurfaceView{
     public ArrayList <Rect> dest = new ArrayList<>();
 
     public PhysicalModel(Context context, Bitmap background, ArrayList<Rect> src, ArrayList<Rect> dest){
-        super(context);
+
 
         this.context=context;
         this.background = background;
@@ -33,6 +33,6 @@ abstract public class PhysicalModel extends SurfaceView{
     abstract public HitType hitModel (Rect rect);
     abstract public HitType hitModel (Rect rect, HitType type);
 
-   // abstract public void draw (Canvas c);
+     public void draw (Canvas c) {};
 
 }

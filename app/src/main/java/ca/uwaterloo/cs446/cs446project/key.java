@@ -22,9 +22,5 @@ public class key extends Tool {
 
     }
 
-    @Override
-    void use() {
-
-    }
 
 }

@@ -24,7 +24,7 @@ public class log extends DynamicObject {
         type = HitType.LOG;
         this.left = left;
         this.right = right;
-        max_right = right + (right - left)/4 ;
+        max_right = right + (right - left)/2;
 
 
     }
@@ -41,18 +41,35 @@ public class log extends DynamicObject {
     public void move () {
 
 
-        if (right < max_right) {
+        if (canMove()) {
             right += moving_velocity;
             left += moving_velocity;
             dest.get(0).offset(moving_velocity,0);
-
         }
 
     }
 
+    public boolean canMove() {
+        return right < max_right;
+    }
+
+    @Override
+    public HitType hitModel (Rect rect, HitType type) {
+        Rect curDest = dest.get(0);
+        if (Rect.intersects(rect, curDest)) {
+            if (type == HitType.LOG_DOWN  && rect.bottom >= curDest.top && rect.bottom < curDest.bottom && rect.top < curDest.top && rect.left > curDest.left && rect.right < curDest.right) {
+                return type;
+            }
+            if (type == HitType.LOG_LEFT && rect.right >= curDest.left && hitModel(rect, HitType.LOG_DOWN) != HitType.LOG_DOWN) {
+                return type;
+            }
+        }
+        return HitType.NULL;
+    }
+
+
     public int getMovingVelocity () {
         return moving_velocity;
     }
-
 
 }

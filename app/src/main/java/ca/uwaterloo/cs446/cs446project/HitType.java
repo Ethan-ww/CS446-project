@@ -15,5 +15,14 @@ public enum HitType {
     TUMBLER,
     WRAITH,
     NULL,
-    DOOR
+    DOOR,
+    CAGE,
+    WATER,
+    FALLING_SPIKE,
+    ISLAND,
+    LOG_LEFT,
+    LOG_DOWN,
+    SENSOR,
+    LEVER,
+    SPIKESENSOR
 }

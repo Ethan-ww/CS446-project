@@ -24,7 +24,7 @@ public class ladder extends DynamicObject {
         type = HitType.LADDER;
         this.top = top;
         this.bottom = bottom;
-        max_bottom = bottom + 350;
+        max_bottom = bottom + 300;
 
     }
 
@@ -42,6 +42,14 @@ public class ladder extends DynamicObject {
             top += moving_velocity;
             dest.get(0).offset(0, moving_velocity);
         }
+
+    }
+
+    public boolean hitLadder(int left) {
+
+        int cx = left + 50;
+        return cx - 200 <= dest.get(0).centerX() &&  dest.get(0).centerX() <= cx+200;
+
 
     }
 }
